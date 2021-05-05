@@ -1,0 +1,26 @@
+body {
+    margin: 0;
+}
+
+.main {
+    margin: 0;
+    padding: 4px;
+    display: flex;
+    flex-direction: row;
+    height: 600px;
+    flex-wrap: wrap;
+}
+
+.pccs-color-picker {
+    flex: 400px;
+    height: 100%;
+}
+
+.control-board {
+    flex: auto;
+    height: 100%;
+}
+
+.preview {
+    flex: 100%;
+}
