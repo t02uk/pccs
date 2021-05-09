@@ -35,8 +35,8 @@ const PCCSColorPicker: React.FC<Props> = (props: Props) => {
 
                     return <PCCSColorToneAggregator
                         pccsColors={pccsColorOfThisTone}
-                        positionX={x * 160 + 8}
-                        positionY={y * 80 + 8}
+                        positionX={x * 140 + 8}
+                        positionY={y * 60 + 8}
                         selectedPccsColors={selectedPccsColors}
                         activePccsColor={activePccsColor}
                         onClick={onClick}

@@ -1207,6 +1207,9 @@ export const pccsColors: PCCSColor[] = rawData.map((x) => {
     }
 });
 
+export const pccsToCssRgb = (pccsColor: PCCSColor): string =>
+    `rgb(${pccsColor.r}, ${pccsColor.g}, ${pccsColor.b})`
+
 export const tones: Tone[] = [
     {
         code: "v",

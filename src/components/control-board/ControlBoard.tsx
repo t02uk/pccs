@@ -1,5 +1,6 @@
 import React, {ReactElement, useCallback} from "react";
-import {PCCSColor, pccsColors} from "../pccs/PCCSColor";
+import {animated, useSpring} from "react-spring";
+import {PCCSColor, pccsColors, pccsToCssRgb} from "../pccs/PCCSColor";
 
 type Props = {
     activeColorIndex: number,
@@ -14,6 +15,10 @@ const ControlBoard: React.FC<Props> = (props: Props) => {
     return (
         <div
             {...divProps}
+            style={{
+                display: "flex",
+                flexDirection: "column"
+            }}
         >
             {pccsColors.map((pccsColor, index) => {
                 const onWrappedOnClick = useCallback(() => {
@@ -35,16 +40,24 @@ type ColorIndicatorProps = {
 const ColorIndicator: React.FC<ColorIndicatorProps> = (props: ColorIndicatorProps) => {
     const {pccsColor, active, onClick} = props;
 
-    const fontColor = pccsColor.v > 0.7 ? '#333' : '#fff';
+    const style = useSpring({
+        to: {
+            backgroundColor: pccsToCssRgb(pccsColor),
+            color: pccsColor.v > 0.7 ? '#333' : '#fff',
+        }
+    });
 
     return (
-        <div className="" style={{
-            backgroundColor: `rgb(${pccsColor.r}, ${pccsColor.g}, ${pccsColor.b})`,
-            height: "33%",
-            position: "relative"
+        <animated.div className="" style={{
+            flex: "1",
+            margin: "2px",
+            borderRadius: "8px",
+            position: "relative",
+            fontWeight: active ? 900 : 500,
+            cursor: 'pointer',
+            ...style
         }} onClick={() => onClick()}>
             <div style={{
-                color: fontColor,
                 position: "absolute",
                 top: 0,
                 right: 0,
@@ -63,13 +76,15 @@ const ColorIndicator: React.FC<ColorIndicatorProps> = (props: ColorIndicatorProp
                 <div style={{
                     fontSize: "75%"
                 }}
-                >* RGB:(#{pccsColor.r.toString(16)}, {pccsColor.g.toString(16)}, {pccsColor.b.toString(16)})</div>
+                >* RGB:(#{pccsColor.r.toString(16)}, {pccsColor.g.toString(16)}, {pccsColor.b.toString(16)})
+                </div>
                 <div style={{
                     fontSize: "75%"
                 }}
-                >* HSV:({pccsColor.h.toFixed(0)}, {pccsColor.s.toFixed(3)}, {pccsColor.v.toFixed(3)})</div>
+                >* HSV:({pccsColor.h.toFixed(0)}, {pccsColor.s.toFixed(3)}, {pccsColor.v.toFixed(3)})
+                </div>
             </div>
-        </div>
+        </animated.div>
     );
 }
 

@@ -13,7 +13,7 @@ type Props = {
 
 const PCCSColorToneAggregator: React.FC<Props> = (props: Props) => {
     const {pccsColors, positionY, positionX, selectedPccsColors, activePccsColor, onClick} = props;
-    const containerSize = 100;
+    const containerSize = 80;
 
     return (
         <div style={{}}>

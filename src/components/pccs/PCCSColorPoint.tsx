@@ -1,4 +1,5 @@
 import React from "react";
+import {animated, useSpring } from "react-spring";
 import {PCCSColor} from "./PCCSColor";
 
 type Props = {
@@ -10,23 +11,30 @@ type Props = {
 
 const PCCSColorPoint: React.FC<Props> = (props: Props) => {
     const {pccsColor, onClick, active, selected} = props;
+    const style = useSpring({
+        to: {
+            boxShadow: active ? '4px 4px #999' :
+                selected ? '4px 4px #ccc' :
+                    '0px 0px transparent',
+            width: selected ? '26px' : '20px'
+        }
+
+    })
+
     return (
-        <div style={
+        <animated.div style={
             {
-                width: '20px',
                 height: '10px',
                 backgroundColor: `rgb(${pccsColor.r}, ${pccsColor.g}, ${pccsColor.b})`,
                 display: "table",
                 boxSizing: 'border-box',
-                boxShadow: active ? '3px 3px #999' :
-                    selected ? '3px 3px #ccc' :
-                    'none'
-
+                cursor: 'pointer',
+                ...style
             }
         }
              onClick={() => onClick(pccsColor)}
         >
-        </div>
+        </animated.div>
     )
 }
 export default PCCSColorPoint;
