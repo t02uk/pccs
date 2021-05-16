@@ -5,6 +5,7 @@
 export type PCCSColor = {
     label: string,
     tone: string,
+    toneFull: string,
     hue: number,
     r: number,
     g: number,
@@ -1187,25 +1188,7 @@ function rgb2hsv(r: number, g: number, b: number): {
         s: s,
         v: v / 255,
     };
-};
-
-export const pccsColors: PCCSColor[] = rawData.map((x) => {
-    const [label, r, g, b] = [x[0], ...x.slice(1).map(Number)];
-    const [tone, hue] = /([a-z+]+?)-?(\d+)/.test(label) ? [RegExp.$1, Number(RegExp.$2)] : [undefined, undefined];
-    const {h, s, v} = rgb2hsv(r, g, b);
-    if (!tone || !hue) throw "A parse error" + label;
-    return {
-        label,
-        tone,
-        hue,
-        r,
-        g,
-        b,
-        h,
-        s,
-        v
-    }
-});
+}
 
 export const pccsToCssRgb = (pccsColor: PCCSColor): string =>
     `rgb(${pccsColor.r}, ${pccsColor.g}, ${pccsColor.b})`
@@ -1258,5 +1241,29 @@ export const tones: Tone[] = [
     {
         code: 'dkg',
         label: 'dark grayish'
+    },
+    {
+        code: 'Gy',
+        label: 'no color'
     }
 ];
+
+export const pccsColors: PCCSColor[] = rawData.map((x) => {
+    const [label, r, g, b] = [x[0], ...x.slice(1).map(Number)];
+    const [tone, hue] = /([a-zA-Z+]+?)-?(\d+)/.test(label) ? [RegExp.$1, Number(RegExp.$2)] : [undefined, undefined];
+    const toneFull = tones.find(_ => _.code === tone)?.label ?? 'unk';
+    const {h, s, v} = rgb2hsv(r, g, b);
+    if (!tone || !hue) throw "A parse error" + label;
+    return {
+        label,
+        tone,
+        toneFull,
+        hue,
+        r,
+        g,
+        b,
+        h,
+        s,
+        v
+    };
+});

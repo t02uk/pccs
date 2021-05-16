@@ -72,7 +72,14 @@ const ColorIndicator: React.FC<ColorIndicatorProps> = (props: ColorIndicatorProp
                 }}>
                     {active ? '☑' : '☐'}
                     &nbsp;
-                    {pccsColor.label}</div>
+                    {pccsColor.label}
+                    &nbsp;
+                    <span style={{
+                        fontSize: "85%"
+                    }}>
+                           ({pccsColor.toneFull} {pccsColor.hue})
+                    </span>
+                </div>
                 <div style={{
                     fontSize: "75%"
                 }}
